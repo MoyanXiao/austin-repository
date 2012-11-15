@@ -1,0 +1,66 @@
+# $RCSfile: x86-WINNT-include,v $
+# 
+# Overview
+#   This makefile is intended to be included in other makefiles, and is
+#   automatically included (by common.make) when building source 
+#   on the Linux platform.
+#
+#   This does assume that you've also included the "common.make" file because
+#   it needs some macros defined their.
+#
+#
+
+# Some common shell commands
+SHELL=sh
+CP=cp
+RM=rm -f
+MKDIR=mkdir
+CAT=cat
+MV=mv
+
+# compile and link tools
+CC=gcc
+CCPLUS=g++
+CCDEP=gcc
+CPP=g++
+CPPDEP=g++
+
+
+# compile and link flag setting
+SHARELIB= -fPIC -DPIC
+SHARED= -shared
+DEPEDENCE= -MM
+
+VERSION=`uname -r`
+SYSTEM=`uname -n`
+
+ifdef DEBUG
+CFLAGS+= -g
+CPPFLAGS+= -g
+else
+CFLAGS+= -O2
+CPPFLAGS+= -O2
+endif
+
+LD=gcc
+LDPLUS=g++
+
+ifdef DEBUG
+LDFLAGS= -g -m64 
+else
+LDFLAGS= -O2 -m64 
+endif
+
+LIBFLAGS=
+
+# SUFFIX and PREFIX setting
+DEP_SUFFIX=.d
+OBJ_SUFFIX=.o
+LOBJ_SUFFIX=.lo
+LIBEXT=.lib
+DLLEXT=.dll
+EXEEXT=.exe
+LIBPREFIX=lib
+
+
+
