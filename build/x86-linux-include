@@ -10,6 +10,13 @@
 #
 #
 
+# Some common shell commands
+SHELL=/bin/sh
+CP=/bin/cp
+RM=/bin/rm -f
+MKDIR=/bin/mkdir
+CAT=/bin/cat
+MV=/bin/mv
 
 # compile and link tools
 CC=gcc

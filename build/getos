@@ -19,6 +19,10 @@ case $OSTYPE in
       x86_64) HARDWARE=x86 ;;
       *) HARDWARE=unknown;;
     esac ;;
+  # This is defined for building in windows using mingw32
+  MINGW32_NT*)
+  	OSNAME=WINNT
+  	HARDWARE=x86
 esac
 
 echo $HARDWARE-$OSNAME
