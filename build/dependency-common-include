@@ -1,0 +1,65 @@
+# $RCSfile: dependency-common-include.make, v $
+# 
+# Overview
+#   This makefile is intended to be included in other makefiles, 
+#   and get the code dependency generation
+#
+
+#
+# C Dependency generation
+#
+%.d: %.c
+	$(SHELL) -ec '$(CCDEP) $(DEPEDENCE) $(CFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< \
+	| sed '\''s/\($*\)\$(OBJ_SUFFIX)[ :]*/$$(BINDIR)\/\1$(OBJ_SUFFIX) $@ : /g'\'' > $@; [ -s $@ ] || $(RM) $@'
+
+#
+# C++ Dependency generation
+#
+%.d: %.cpp
+	$(SHELL) -ec '$(CPPDEP) $(DEPEDENCE) $(CPPFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< \
+	| sed '\''s/\($*\)\$(OBJ_SUFFIX)[ :]*/$$(BINDIR)\/\1$(OBJ_SUFFIX) $@ : /g'\'' > $@; [ -s $@ ] || $(RM) $@'
+
+$(BINDIR)/%.o: $(SRCDIR)/%.c
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(CC) -c $(CFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@ 
+
+$(BINDIR)/%.o: %.c
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(CC) -c $(CFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@ 
+
+$(BINDIR)/%.lo: %.c
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(CC) -c $(CFLAGS) $(SHARELIB) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@ 
+
+$(BINDIR)/%.o: $(SRCDIR)/%.cpp
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(CCPLUS) -c $(CPPFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@
+
+$(BINDIR)/%.o: %.cpp
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(CCPLUS) -c $(CPPFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@
+
+$(BINDIR)/%.lo: %.cpp
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(CCPLUS) -c $(CPPFLAGS) $(SHARELIB) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@ 
+
+# Rules for making libraries
+%$(LIBEXT):
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(RM) $@
+	$(AR) -cr $(LIBFLAGS) $@ $(OBJECTS)
+
+%$(LIBSHARE):
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(RM) $@
+	$(AR) -cr $(LIBFLAGS) $@ $(LOBJECTS)
+
+%$(DLLEXT):
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(RM) $@
+	$(LDPLUS) $(LDFLAGS) $(SHARED) $(LOBJECTS) $(LDLIBS) -o $@
+
+%$(EXEEXT):
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(RM) $@
+	$(LDPLUS) $(LDFLAGS) $(OBJECTS) $(LDLIBS) -o $@

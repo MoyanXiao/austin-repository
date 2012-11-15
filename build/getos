@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# Shell script to detect which OS we're on
+# Now only Linux is supported
+#
+# Change History:
+#
+# Revision
+#
+OSTYPE=`uname -s`
+PROCESSOR=`uname -p`
+MACHINE=`uname -m`
+VERSION=`uname -r`
+
+case $OSTYPE in
+  Linux)
+    OSNAME=linux
+    case $MACHINE in
+      x86_64) HARDWARE=x86 ;;
+      *) HARDWARE=unknown;;
+    esac ;;
+esac
+
+echo $HARDWARE-$OSNAME
+
