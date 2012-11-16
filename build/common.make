@@ -9,14 +9,6 @@
 #get the OS string
 OS:=$(shell sh $(ROOT)/build/getos)
 
-# Some common shell commands
-SHELL=/bin/sh
-CP=/bin/cp
-RM=/bin/rm -f
-MKDIR=/bin/mkdir
-CAT=/bin/cat
-MV=/bin/mv
-
 #
 # Standard subdirectories for source, include, and binary files
 #
