@@ -34,6 +34,7 @@ vpath %.cc $(SRCDIR)
 vpath %.cpp $(SRCDIR)
 vpath %.cxx $(SRCDIR)
 vpath %.h $(INCDIR)
+vpath %.i $(WORKDIR)
 vpath %.o $(WORKDIR)
 vpath %.lo $(WORKDIR)
 

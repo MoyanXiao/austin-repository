@@ -13,6 +13,9 @@ SOURCES:= $(wildcard $(SRCDIR)/*.c $(SRCDIR)/*.cpp)
 C_SOURCES:= $(filter %.c, $(SOURCES))
 CPP_SOURCES:= $(filter %.cpp, $(SOURCES))
 
+# preCompile to inter files 
+INTER:= $(foreach OBJ,$(C_SOURCES:$(SRCDIR)%.c=%$(INTER_SUFFIX)),$(BINDIR)$(OBJ))
+INTER+= $(foreach OBJ,$(CPP_SOURCES:$(SRCDIR)%.cpp=%$(INTER_SUFFIX)),$(BINDIR)$(OBJ))
 
 # get all the object files(.o) according to the source files 
 OBJECTS:= $(foreach OBJ,$(C_SOURCES:$(SRCDIR)%.c=%$(OBJ_SUFFIX)),$(BINDIR)$(OBJ))

@@ -19,10 +19,18 @@
 	$(SHELL) -ec '$(CPPDEP) $(DEPEDENCE) $(CPPFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< \
 	| sed '\''s/\($*\)\$(OBJ_SUFFIX)[ :]*/$$(BINDIR)\/\1$(OBJ_SUFFIX) $@ : /g'\'' > $@; [ -s $@ ] || $(RM) $@'
 
+$(BINDIR)/%.i: $(SRCDIR)/%.c
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(CC) -E $(CFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@ 
+	
 $(BINDIR)/%.o: $(SRCDIR)/%.c
 	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
 	$(CC) -c $(CFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@ 
 
+$(BINDIR)/%.i: %.c
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(CC) -E $(CFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@ 
+	
 $(BINDIR)/%.o: %.c
 	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
 	$(CC) -c $(CFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@ 
@@ -31,10 +39,18 @@ $(BINDIR)/%.lo: %.c
 	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
 	$(CC) -c $(CFLAGS) $(SHARELIB) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@ 
 
+$(BINDIR)/%.i: $(SRCDIR)/%.cpp
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(CCPLUS) -E $(CPPFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@
+	
 $(BINDIR)/%.o: $(SRCDIR)/%.cpp
 	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
 	$(CCPLUS) -c $(CPPFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@
 
+$(BINDIR)/%.i: %.cpp
+	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
+	$(CCPLUS) -E $(CPPFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@
+	
 $(BINDIR)/%.o: %.cpp
 	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
 	$(CCPLUS) -c $(CPPFLAGS) $(foreach DIR,$(INCLUDE_DIRS),-I "$(DIR)") $< -o $@

@@ -11,11 +11,12 @@ alltarget: $(DEP_OBJECTS) $(TARGET)
 
 clean:
 	-$(RM) $(TARGET)
+	-$(RM) $(INTER)
 	-$(RM) $(OBJECTS)
 	-$(RM) $(LOBJECTS)
 	-$(RM) $(DEP_OBJECTS)
 
-$(TARGET): $(OBJECTS) $(LOBJECTS) FORCE
+$(TARGET): $(INTER) $(OBJECTS) $(LOBJECTS) FORCE
 
 debug:
 	$(MAKE) all "DEBUG=-g";
