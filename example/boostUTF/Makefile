@@ -17,8 +17,8 @@ INCLUDE_DIRS += ${ROOT}/boost/include/
 # STATIC_LINK_FILES += ...
 # LIBRARY_PATHS += ...
 # LDFLAGS += ...
-#STATIC_LINK_FILES += ${ROOT}/boost/lib/${LIBPREFIX}boost_unit_test_framework${LIBEXT}
-LDLIBS += -lboost_unit_test_framework
+STATIC_LINK_FILES += ${ROOT}/boost/lib/${LIBPREFIX}boost_unit_test_framework${LIBEXT}
+#LDLIBS += -lboost_unit_test_framework
 LIBRARY_PATHS += ${ROOT}/boost/lib/
 
 # 5 --> set the TARGET file

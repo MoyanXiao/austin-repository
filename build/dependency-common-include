@@ -73,9 +73,9 @@ $(BINDIR)/%.lo: %.cpp
 %$(DLLEXT):
 	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
 	$(RM) $@
-	$(LDPLUS) $(LDFLAGS) $(SHARED) $(LOBJECTS) $(LDLIBS) -o $@
+	$(LDPLUS) $(SHARED) $(LOBJECTS) $(LDLIBS) -o $@ $(LDFLAGS)
 
 %$(EXEEXT):
 	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
 	$(RM) $@
-	$(LDPLUS) $(LDFLAGS) $(OBJECTS) $(LDLIBS) -o $@
+	$(LDPLUS) $(OBJECTS) $(LDLIBS) -o $@ $(LDFLAGS)
