@@ -10,14 +10,14 @@ include ${BUILD_SCR}/common.make
 
 # 3 --> add extra header search path
 # INCLUDE_DIRS += ....
-INCLUDE_DIRS += ${ROOT}/gtest/include/
+INCLUDE_DIRS += ${ROOT}/google/include/
 
 # 4 --> add extra library file or path
 # STATIC_LINK_FILES += ...
 # LIBRARY_PATHS += ...
 # LDFLAGS += ...
 LDFLAGS +=  -lpthread
-STATIC_LINK_FILES += ${ROOT}/gtest/lib/.libs/${LIBPREFIX}gtest${LIBEXT}
+STATIC_LINK_FILES += ${ROOT}/google/lib/gtest${LIBEXT}
 
 # 5 --> set the TARGET file
 TARGET=${BINDIR}/gtestExample${EXEEXT}
