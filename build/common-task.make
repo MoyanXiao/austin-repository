@@ -7,7 +7,7 @@
 
 all: alltarget
 
-alltarget: $(DEP_OBJECTS) $(TARGET)
+alltarget: ${SUPPORT_LIB} $(DEP_OBJECTS) $(TARGET) 
 
 clean:
 	-$(RM) $(TARGET)

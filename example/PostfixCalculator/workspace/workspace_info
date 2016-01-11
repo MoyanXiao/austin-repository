@@ -1,0 +1,1 @@
+let g:config_dict = {'FileExtense': ['h', 'cpp']}

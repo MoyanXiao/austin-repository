@@ -65,6 +65,7 @@ LIBEXT=.a
 DLLEXT=.so
 EXEEXT=
 LIBPREFIX=lib
+SUP_LIB=.suplib
 
 
 

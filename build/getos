@@ -13,7 +13,7 @@ MACHINE=`uname -m`
 VERSION=`uname -r`
 
 case $OSTYPE in
-  Linux)
+  Linux|Darwin)
     OSNAME=linux
     case $MACHINE in
       x86_64) HARDWARE=x86 ;;

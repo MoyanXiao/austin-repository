@@ -7,7 +7,20 @@
 #
 #
 
+# define the google test/mock header/lib
+ifdef GOOGLE_MOCK
+INCLUDE_DIRS += ${ROOT}/google/include/
+LDFLAGS +=  -lpthread
+STATIC_LINK_FILES += ${ROOT}/google/lib/gmock_main${LIBEXT}
+SUPPORT_LIB+=gtest${SUP_LIB}
+endif
 
+# define the google test/mock header/lib
+ifdef GOOGLE_BENCHMARK
+INCLUDE_DIRS += ${ROOT}/google/include/
+STATIC_LINK_FILES += ${ROOT}/google/lib/${LIBPREFIX}benchmark${LIBEXT}
+SUPPORT_LIB+=benchmark${SUP_LIB}
+endif
 # get all the source file
 SOURCES:= $(wildcard $(SRCDIR)/*.c $(SRCDIR)/*.cpp)
 C_SOURCES:= $(filter %.c, $(SOURCES))
