@@ -78,12 +78,7 @@ $(BINDIR)/%.lo: %.cpp
 %$(EXEEXT):
 	@[ -d $(BINDIR) ] || mkdir $(BINDIR)
 	$(RM) $@
-<<<<<<< HEAD
-	$(LDPLUS) $(OBJECTS) $(LDLIBS) -o $@ $(LDFLAGS)
-=======
 	$(LDPLUS) $(LDFLAGS) $(OBJECTS) $(LDLIBS) -o $@
 
 %$(SUP_LIB): 
 	-export ABS_ROOT=${PWD}/${ROOT};${BUILD_SCR}/$@-autoget.sh && unset ABS_ROOT
-
->>>>>>> 54a6270ffe0219519e0ac84c538d811a731f3c74
