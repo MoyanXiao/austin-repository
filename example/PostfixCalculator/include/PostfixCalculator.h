@@ -13,19 +13,17 @@ public:
     PostfixCalculator();
     ~PostfixCalculator();
 
-    int calculate(std::string input);
-
-    double getResult();
-
-    std::string getResultMsg();
-
+    double calculate(const std::string& input);
+    bool calculate_noexception(const std::string& input, double& result) noexcept;
 private:
     /* data */
     std::stack<double> _stack;
     std::map<char, std::function<double(double,double)> > _opMap;
 
 private:
-    bool validate(std::string);
+    void validate(std::string&);
+    double popStack();
+    double popResult();
 };
 
 

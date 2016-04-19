@@ -18,7 +18,10 @@ PostfixCalculator::~PostfixCalculator() {
     }
 }
 
-int PostfixCalculator::calculate(std::string input) {
+double PostfixCalculator::calculate(const std::string& input) {
+    while (!_stack.empty()) {
+        _stack.pop();
+    }
     std::istringstream ss(input);
     std::vector<std::string> list;
     std::copy(std::istream_iterator<std::string>(ss), std::istream_iterator<std::string>(), std::back_inserter(list));
@@ -27,39 +30,50 @@ int PostfixCalculator::calculate(std::string input) {
             auto op = _opMap.find(iter.at(0));
             if (op != _opMap.end()) {
                 double a, b;
-                if ( _stack.empty() ) 
-                    return 2;
-                else 
-                    b = _stack.top();
-                _stack.pop();
-                if ( _stack.empty() ) 
-                    return 2;
-                else 
-                    a = _stack.top();
-                _stack.pop();
+                b = popStack();
+                a = popStack();
                 _stack.push((op->second)(a, b));
                 continue;
             }
         }
-        if (!validate(iter)) {
-            return 1;
-        }
+        validate(iter);
     }
-    return 0;
+    return popResult();
 }
 
-double PostfixCalculator::getResult() {
-    return _stack.top();
+bool PostfixCalculator::calculate_noexception(const std::string& input, double& ret) noexcept{
+    try {
+        ret = calculate(input);
+        return true;
+    } catch(std::invalid_argument& e) {
+        return false;
+    } catch(...) {
+        return false;
+    }
 }
 
-std::string PostfixCalculator::getResultMsg() {
-    return "success";
-}
-
-bool PostfixCalculator::validate(std::string a) {
+void PostfixCalculator::validate(std::string& a) {
     std::string::size_type sz;
     double val = std::stod(a, &sz);
-    if ( sz != a.size() ) return false;
+    if ( sz != a.size() ) {
+        throw std::invalid_argument(a);
+    }
     _stack.push(val);
-    return true;
+}
+
+double PostfixCalculator::popStack() {
+    if (_stack.empty()) {
+        throw std::invalid_argument("No value in stack");
+    }
+    auto ret = _stack.top();
+    _stack.pop();
+    return ret;
+}
+
+double PostfixCalculator::popResult() {
+    auto ret = popStack();
+    if (!_stack.empty()) {
+        throw std::invalid_argument("no empty stack when popResult");
+    }
+    return ret;
 }
